@@ -1,71 +1,51 @@
-AutoCAD 3D Terrain Generator (TopoBuilder)
+# AutoCAD 3D Terrain Generator (TopoBuilder)
 
-This is a plugin for AutoCAD designed to create detailed 3D terrain models from topographical survey data. The script processes text objects representing survey points to generate a Solid3d model and a visual PolyFaceMesh.
+A powerful Autodesk AutoCAD add-in designed to generate complex 3D terrain models from 2D survey point data. This tool is perfect for civil engineers, surveyors, and designers who need to quickly create accurate 3D solids and surface meshes from text-based elevation points.
 
-The project also includes a handy utility command to align text labels with their corresponding survey markers, making it a complete solution for working with survey data in AutoCAD.
-Features
+### What It Does
 
-    3D Solid Terrain Generation: Creates a watertight Solid3d object from point data, perfect for volumetric analysis, sectioning, or further 3D modeling.
+The script provides a simple and powerful workflow directly within AutoCAD:
 
-    Surface Visualization Mesh: Generates a lightweight PolyFaceMesh on a separate layer, providing a quick and clear visualization of the terrain's surface.
+1.  **Select a Sample Point:** You begin by selecting a single text object that is representative of your survey points (e.g., same layer and color).
+2.  **Automatic Data Collection:** The script scans the entire drawing to find all text objects that match the properties of your sample. It intelligently extracts the **XY coordinates** from the text's insertion point and the **Z elevation** from its numerical content.
+3.  **Intelligent Filtering:** If multiple points exist at the same XY location, the script automatically uses the one with the highest Z-value, preventing data conflicts.
+4.  **3D Model Generation:** The script uses a Delaunay triangulation algorithm to create a topologically correct network from the points. It then builds two objects:
+    *   A watertight **3D Solid** representing the terrain volume.
+    *   A lightweight **PolyFaceMesh** for easy surface visualization.
+5.  **Text Preparation (Optional):** An included utility command, `ALTXT`, helps you prepare your drawing by aligning elevation text to the center of its corresponding marker (circle, arc, or block).
 
-    Data-Driven Modeling: Intelligently builds the model by:
+### Key Features
 
-        Using the XY insertion point of text objects for location.
+*   **Intuitive Workflow:** A simple "select sample and run" process right inside the AutoCAD command line.
+*   **3D Solid & Mesh Output:** Creates both a solid for analysis and a mesh for visualization in a single operation.
+*   **Property-Based Filtering:** Automatically processes only the text objects that match the layer and color of your sample.
+*   **Robust Triangulation Engine:** Implements a Delaunay algorithm from scratch to ensure a correct and efficient surface model.
+*   **Duplicate Point Handling:** Automatically resolves stacked points by selecting the highest elevation, ensuring a clean model.
+*   **Helper Utility Included:** Comes with the `ALTXT` command to simplify drawing cleanup and preparation.
 
-        Using the numerical content of the text for Z elevation.
+### How to Use
 
-    Intelligent Point Filtering:
+1.  **Load the Add-in:** Load the compiled `.dll` file into your AutoCAD session using the `NETLOAD` command.
+2.  **(Optional) Prepare Drawing:** Use the `ALTXT` command to align your text labels to their markers for a cleaner drawing.
+3.  **Run the Main Command:** Type `TOPOMODEL` in the command line.
+4.  **Select Sample Text:** Follow the prompt to select one of your elevation text objects.
+5.  **Done!** The script will process all matching points and create the 3D solid and visualization mesh in your model space.
 
-        Allows the user to select a sample text object, and the script will only process other text entities that match the sample's layer and color.
+### AI-Assisted Development ("Vibecoding")
 
-        Automatically resolves points with duplicate XY coordinates by selecting the one with the highest Z elevation, ensuring a clean surface.
+This script was developed with significant assistance from AI. The process, which could be described as **"Vibecoding,"** involved translating a clear functional vision and complex algorithmic logic into robust C# code through collaboration with an AI partner. The AI helped structure the code, implement the Delaunay triangulation and solid geometry functions, and debug the workflow, acting as a powerful tool to bring the initial idea to life.
 
-    Delaunay Triangulation: Implements a robust algorithm to create a topologically correct Triangulated Irregular Network (TIN) from the point data, forming the basis of the 3D model.
+### Installation & Setup
 
-    Auxiliary Text Alignment Tool: Includes a helper command to quickly center text labels on their corresponding survey markers (circles, arcs, or blocks), simplifying drawing cleanup before generating the model.
+To use this script, you need to compile it and load it into AutoCAD.
 
-Available Commands
-TOPOMODEL (Main Command)
+1.  **Compile the Code:** Open the project in Visual Studio (2019 or later) and build the solution. This will create a `TopoBuilder.dll` file in the `bin/Debug` or `bin/Release` folder.
+2.  **Load into AutoCAD:**
+    *   Open AutoCAD.
+    *   Type `NETLOAD` in the command line.
+    *   A file browser window will open. Navigate to the location of your `TopoBuilder.dll` file (e.g., in the `bin/Debug` folder) and select it.
+    *   The add-in is now loaded for your current session. You will need to `NETLOAD` it again if you restart AutoCAD.
 
-This is the primary command of the plugin. It initiates the entire process of creating the 3D terrain solid and the accompanying surface mesh.
-ALTXT (Utility Command)
+---
 
-This is a helper tool used to prepare a drawing. It aligns text objects to the center of a sample circle, arc, or block, ensuring that elevation labels are correctly positioned over their markers.
-Workflow & How to Use
-
-    Prepare Your Drawing:
-
-        Ensure your drawing contains text objects where the XY position represents the survey point and the text's content is the elevation value (e.g., "123.45").
-
-        All survey point text objects should share common properties, like being on the same layer.
-
-        (Optional) If your text labels are not centered on their markers, use the ALTXT command to clean up their positions first.
-
-    Load the Plugin:
-
-        Open AutoCAD.
-
-        Type the NETLOAD command into the command line.
-
-        Browse to and select the compiled TopoBuilder.dll file.
-
-    Run the Terrain Generator:
-
-        Type TOPOMODEL in the command line and press Enter.
-
-        The command prompt will ask you to "Select sample text object...". Click on one of the text objects that you want to use for the terrain generation.
-
-        The script will automatically read its properties (layer, color) and use them to find all other matching survey points.
-
-    Review the Output:
-
-        The script will process all valid points and generate two new objects:
-
-            A 3D Solid representing the terrain volume.
-
-            A PolyFaceMesh for visualization (typically on a new "Topo_Surface_Visualization" layer).
-
-Disclaimer
-
-This script was written with the assistance of an AI programming partner (vibecoding).
+**Disclaimer:** This is a utility script. Always back up your drawings before running commands that create or modify a large amount of geometry. Use at your own risk.
