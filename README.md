@@ -2,7 +2,7 @@
 
 A powerful Autodesk AutoCAD add-in designed to generate complex 3D terrain models from 2D survey point data. This tool is perfect for civil engineers, surveyors, and designers who need to quickly create accurate 3D solids and surface meshes from text-based elevation points.
 
-[![AutoCAD 3D Terrain Generator workflow](https://img.youtube.com/vi/https://youtu.be/uRIdcaeOZLM/maxresdefault.jpg)](https://www.youtube.com/watch?v=https://youtu.be/uRIdcaeOZLM)
+[![AutoCAD 3D Terrain Generator workflow](https://img.youtube.com/vi/uRIdcaeOZLM/maxresdefault.jpg)](https://www.youtube.com/watch?v=uRIdcaeOZLM)
 
 ### What It Does
 
